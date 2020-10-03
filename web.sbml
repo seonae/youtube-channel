@@ -1,0 +1,8 @@
+=begin sbml
+
+=object web: id=${web-id}.web, url="https://www.youtube.com/channel/${channel-id}/videos", \
+            javascript-bridge="__$_bridge", uses-browser-user-agent=yes, \
+            script-when-loaded=${web-prefix}__on_web_loaded, \
+            style=web
+
+=end sbml
