@@ -51,17 +51,19 @@ var module = (function() {
         get_channel_info: function() {
             return new Promise(function(resolve, reject) {
                 var handler = function() {
-                    webjs.call("getChannelInfo").then(function(result) {
-                        resolve({
-                            "title":result["channelInfo"]["title"],
-                            "logo-url":result["channelInfo"]["logoUrl"],
-                            "subscriber-count":result["channelInfo"]["subscriberCount"],
-                            "logged-in":result["channelInfo"]["loggedIn"] ? "yes" : "no",
-                            "subscribing":result["channelInfo"]["subscribing"] ? "yes" : "no"
+                    webjs.call("getChannelInfo")
+                        .then(function(result) {
+                            resolve({
+                                "title":result["channelInfo"]["title"],
+                                "logo-url":result["channelInfo"]["logoUrl"],
+                                "subscriber-count":result["channelInfo"]["subscriberCount"],
+                                "logged-in":result["channelInfo"]["loggedIn"] ? "yes" : "no",
+                                "subscribing":result["channelInfo"]["subscribing"] ? "yes" : "no"
+                            });
+                        })
+                        .catch(function(error) {
+                            reject(error);
                         });
-                    }, function(error) {
-                        reject(error);
-                    });
                 }
                 
                 _web_loaded ? handler() : _handlers.push(handler);
@@ -72,23 +74,25 @@ var module = (function() {
             return new Promise(function(resolve, reject) {
                 var handler = function() {
                     feed.feed("videos", function(next_token) {
-                        webjs.call("getVideos", [ next_token ]).then(function(result) {
-                            var videos = [];
+                        webjs.call("getVideos", [ next_token ])
+                            .then(function(result) {
+                                var videos = [];
                 
-                            result["videos"].forEach(function(video) {
-                                videos.push({
-                                    "video-id":video["url"].match(/v=([^&#]+)/)[1],
-                                    "title":video["title"],
-                                    "view-count":video["viewCount"],
-                                    "published-at":video["publishedDate"]
+                                result["videos"].forEach(function(video) {
+                                    videos.push({
+                                        "video-id":video["url"].match(/v=([^&#]+)/)[1],
+                                        "title":video["title"],
+                                        "view-count":video["viewCount"],
+                                        "published-at":video["publishedDate"]
+                                    });
                                 });
-                            });
                 
-                            feed.on_feed_done("videos", location + result["videos"].length);
-                            resolve(videos);
-                        }, function(error) {
-                            reject(error);
-                        })
+                                feed.on_feed_done("videos", location + result["videos"].length);
+                                resolve(videos);
+                            })
+                            .catch(function(error) {
+                                reject(error);
+                            });
                     })
                 }
 
@@ -106,11 +110,13 @@ var module = (function() {
         subscribe: function() {
             return new Promise(function(resolve, reject) {
                 var handler = function() {
-                    webjs.call("subscribe").then(function() {
-                        resolve();
-                    }, function(error) {
-                        reject(error);
-                    })
+                    webjs.call("subscribe")
+                        .then(function() {
+                            resolve();
+                        })
+                        .catch(function(error) {
+                            reject(error);
+                        });
                 }
 
                 _web_loaded ? handler() : _handlers.push(handler);
