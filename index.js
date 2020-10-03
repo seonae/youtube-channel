@@ -7,6 +7,8 @@ var module = (function() {
     var _web_loaded = false;
 
     function _on_web_loaded(data) {
+        console.log("get_videos")
+
         if (data["url"].startsWith("https://m.youtube.com/channel")) {
             webjs.import(_dir_path + "/youtube.js");
 
@@ -27,7 +29,7 @@ var module = (function() {
             var web_prefix = id.replace(".", "_");
             var dir_path = this.__ENV__["dir-path"];
 
-            global[web_prefix + "__on_web_loaded"] = function (data) {
+            global[web_prefix + "__on_web_loaded"] = function(data) {
                 _on_web_loaded(data);
             }
 
