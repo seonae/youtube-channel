@@ -24,7 +24,8 @@ function _getVideos(location, waitingCount, onResult, onError) {
                         "url":videoItems[i].getElementsByClassName('compact-media-item-image')[0].href,
                         "title":videoItems[i].getElementsByClassName('compact-media-item-headline')[0].textContent,
                         "viewCount":videoItems[i].getElementsByClassName('compact-media-item-stats')[0].textContent,
-                        "publishedDate":videoItems[i].getElementsByClassName('compact-media-item-stats')[1].textContent
+                        "publishedDate":videoItems[i].getElementsByClassName('compact-media-item-stats')[1].textContent,
+                        "duration":videoItems[0].getElementsByTagName('ytm-thumbnail-overlay-time-status-renderer')[0].textContent
                     })
                 } catch (e) {
                     // eat up
