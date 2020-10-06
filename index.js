@@ -85,7 +85,8 @@ var module = (function() {
                                         "video-id":video["url"].match(/v=([^&#]+)/)[1],
                                         "title":video["title"],
                                         "view-count":video["viewCount"],
-                                        "published-at":video["publishedDate"]
+                                        "published-at":video["publishedDate"],
+                                        "duration":video["duration"]
                                     });
                                 });
                 
